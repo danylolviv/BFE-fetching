@@ -1,0 +1,41 @@
+
+r
+java:S1192°"VUse already-defined constant 'DEFAULT_ENCODING' instead of duplicating its value here.(ÚÉøüÿÿÿÿ
+P
+java:S1191
+"5Use classes from the Java API instead of Sun classes.(Æ¡³ ÿÿÿÿÿ
+N
+java:S2755U"3Disable access to external entities in XML parsing.(¿Ííùÿÿÿÿ
+J
+java:S2755Ã"3Disable access to external entities in XML parsing.(²µŸš
+L
+java:S3416"1Update this logger to use "OISTestRequest.class".(Ï©èĞûÿÿÿÿ
+n
+java:S21394"XEither log this exception and handle it, or rethrow it with some contextual information.(”ı¾
+N	java:S106="9Replace this use of System.out or System.err by a logger.(Šğš
+N	java:S106@"9Replace this use of System.out or System.err by a logger.(ˆİ’Ô
+n
+java:S2139V"XEither log this exception and handle it, or rethrow it with some contextual information.(”ı¾
+N	java:S106W"9Replace this use of System.out or System.err by a logger.(öØÈ¢
+E
+java:S2093?"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+_
+java:S1854­"<Remove this useless assignment to local variable "sqlQuery".(‡§¯Àÿÿÿÿÿ8ìòö£Â1
+Q	java:S125l"<This block of commented-out lines of code should be removed.(šãÂ‡
+Y	java:S125«"<This block of commented-out lines of code should be removed.(ÍÆÅ·8·Œù£Â1
+P
+java:S1481­"-Remove this unused "sqlQuery" local variable.(‡§¯Àÿÿÿÿÿ8íòö£Â1
+S
+java:S1117´"7Rename "url" which hides the field declared at line 34.(Õ€û—ûÿÿÿÿ
+T	java:S106Ü"9Replace this use of System.out or System.err by a logger.(ã¿¢Ôùÿÿÿÿ
+T	java:S106ß"9Replace this use of System.out or System.err by a logger.(äĞ ·øÿÿÿÿ
+N	java:S106à"9Replace this use of System.out or System.err by a logger.(í ÌK
+Z
+java:S1128
+"8Remove this unused import 'sun.net.www.http.HttpClient'.(Æ¡³ ÿÿÿÿÿ8ÁŒù£Â1
+[
+java:S1128">Remove this unused import 'java.nio.charset.StandardCharsets'.(ï˜ŞÛ8ÁŒù£Â1
+H
+java:S1068"-Remove this unused "POST_FUNC" private field.(ıÊœßüÿÿÿÿ
+L
+java:S1068 "1Remove this unused "POST_FUNC_PAR" private field.(ßÅªÿüÿÿÿÿ
