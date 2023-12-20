@@ -52,22 +52,58 @@ public class Main {
                     OISQueryService service = new OISQueryService();
 
                     List<String> sqlQueries = new ArrayList<>();
-                sqlQueries.add("SELECT DISTINCT Vejnavn, Vejkode_0, Vejkode, Kommunekode, Postnr FROM DAR.AdresseGeoView WHERE Kommunekode = 561 AND Postnr NOT IN (6690, 6700, 6705, 6710, 6715, 6731, 6740, 6760, 6771)");
+//                     AND Postnr NOT IN (6690, 6700, 6705, 6710, 6715, 6731, 6740, 6760, 6771)
+                sqlQueries.add("SELECT DISTINCT Vejnavn, Vejkode_0, Vejkode, Kommunekode, Postnr FROM DAR.AdresseGeoView WHERE Kommunekode = 561");
 //                sqlQueries.add("SELECT TOP 10 BFEnummer, SFElokalId FROM MATRIKEL.EjerlejlighedView");
 //                sqlQueries.add("SELECT Vejnavn, Vejkode FROM DAR.AdresseForeloebigGeoView WHERE Kommunekode = 0561");
-                sqlQueries.add("SELECT Vejnavn, Vejkode FROM DAR.NavngivenvejGeoView WHERE Kommunekode = 0561");
+//                sqlQueries.add("SELECT Vejnavn, Vejkode FROM DAR.NavngivenvejGeoView WHERE Kommunekode = 0561");
 //                sqlQueries.add("SELECT DISTINCT Vejnavn, Vejkode_0, Kommunekode, Postnr FROM DAR.AdresseGeoView WHERE Kommunekode = 561 AND Postnr NOT IN (6690, 6700, 6705, 6710, 6715, 6731, 6740, 6760, 6771)");
 //                sqlQueries.add("SELECT DISTINCT Vejkode FROM DAR.HusnummerGeoView WHERE Kommunekode = 0561 AND Vejnavn = 'Guldregns Alle' ");
 //                sqlQueries.add("SELECT id_lokalId, Vejkode, Status, Status_T, Vejkode_0, Vejnavn, husNrTal, husNrTal_0, HusNr, Jordstykke, KoorNord FROM DAR.HusnummerGeoView WHERE Vejkode = 2792 AND Kommunekode = 561");
 //                sqlQueries.add("SELECT LifaId, id_lokalId, AdressepunktId, Position FROM DAR.AdressepunktGeoView WHERE id_lokalId = '0a3f508d-8669-32b8-e044-0003ba298018'");
 //                sqlQueries.add("SELECT id_lokalId, AdressepunktId FROM DAR.AdressepunktGeoView WHERE id_lokalId != AdressepunktId;");
 
+//                sqlQueries.add("SELECT DISTINCT k.NavngivenVej, h.Vejnavn, h.VejKode, h.Postnr, h.PostDistrikt " +
+//                        "FROM DAR.NavngivenvejkommunedelView k, DAR.HusnummerGeoView h " +
+//                        "WHERE k.Kommune = 561 " +
+//                        "and h.NavngivenVej = k.NavngivenVej");
+
+                    String potentialQuery = "SELECT" +
+                            "    k.NavngivenVej as nanvgivenVejId," +
+                            "    k.VejKode as vejKode," +
+                            "    v.Vejnavn as vejnavn," +
+                            "    CASE" +
+                            "        WHEN (" +
+                            "            SELECT COUNT(v2.Vejnavn)" +
+                            "            FROM DAR.NavngivenvejGeoView v2" +
+                            "            LEFT JOIN DAR.NavngivenvejkommunedelView k2 ON v2.NavngivenvejId = k2.NavngivenVej" +
+                            "            WHERE k2.Kommune = 561 AND v2.Vejnavn = v.Vejnavn" +
+                            "            GROUP BY v2.Vejnavn" +
+                            "        ) > 1 THEN" +
+                            "        (" +
+                            "            v.Vejnavn+' ('+(SELECT TOP 1 CAST(h.Postnr as VARCHAR) + ' ' + h.PostDistrikt FROM DAR.HusnummerGeoView h where h.NavngivenVej = k.NavngivenVej)+')'\n" +
+                            "        )" +
+                            "        ELSE v.Vejnavn" +
+                            "    END AS orgvejnavn" +
+                            "FROM" +
+                            "    DAR.NavngivenvejkommunedelView k" +
+                            "    LEFT JOIN DAR.NavngivenvejGeoView v ON v.NavngivenvejId = k.NavngivenVej" +
+                            "WHERE" +
+                            "    k.Kommune = 561;";
+
+                    sqlQueries.add(potentialQuery);
+
+
+
+
+                    String ql = "SELECT Vejnavn, HusnummerTekst from DAR.AdresseGeoView where Kommunekode = 561";
+
 //                sqlQueries.add("SELECT Vejnavn, Vejkode, Kommunenavn FROM DAR.HusnummerGeoView WHERE Kommunekode = 561 ");
 
-                    sqlQueries.add("SELECT v.LifaId, v.Vejnavn, v.NavngivenvejId, k.VejKode, k.Kommune, p.Postnummer " +
-                            "FROM DAR.NavngivenvejGeoView v, DAR.NavngivenvejkommunedelView k, DAR.NavngivenvejpostnummerView p " +
-                            "WHERE v.AdministreresAfKommune = 561 and k.vejKode = 519  " +
-                            "and k.NavngivenVej = v.NavngivenvejId and p.NavngivenVej = k.NavngivenVej");
+//                sqlQueries.add("SELECT v.LifaId, v.Vejnavn, v.NavngivenvejId, k.VejKode, k.Kommune, p.Postnummer " +
+//                                "FROM DAR.NavngivenvejGeoView v, DAR.NavngivenvejkommunedelView k, DAR.NavngivenvejpostnummerView p " +
+//                                "WHERE v.AdministreresAfKommune = 561 and k.vejKode = 519  " +
+//                                "and k.NavngivenVej = v.NavngivenvejId and p.NavngivenVej = k.NavngivenVej");
 
                 // Loop through each query and execute it
                 for (String query : sqlQueries) {
